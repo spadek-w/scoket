@@ -1,0 +1,86 @@
+
+.header{
+    line-height: 20px;
+    text-align: center;
+}
+#login_box{
+    max-width: 680px;
+    margin: 0 auto;
+}
+.user_name{
+    float: left;
+    padding-left:10px;
+}
+.user_name span{
+    line-height: 25px;
+}
+.user_name_rightIpt{
+    /* width: 100%; */
+    padding-left:85px; 
+}
+.user_ipt{
+    width: 98%;
+}
+.joinOrLeaveRoom{
+    width: 100%;
+    display: flex;
+    align-items: flex-start 
+}
+.join_btn{
+    flex:1;
+    text-align: center;
+}
+.join_btn input{ 
+    background: #47CB89;
+}
+.leave_btn{
+    flex: 1;
+    text-align: center;
+}
+.leave_btn input{
+    background: orangered;
+}
+
+/* 聊天窗口 start*/
+.socket_body{
+    width: 99%;
+    height: 300px;
+    border:1px solid red;
+    overflow-y: auto;  
+}
+.socket_body_ul{
+    padding: 10px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/*聊天窗口end  */
+/* 自动添加区域 */
+.auto_add_body{
+    display: flex;
+    align-items: flex-start 
+}
+.auto_add_time{
+    flex: 3;
+    padding-left:10px;
+}
+.auto_add_num{
+    flex: 5;
+}
+.auto_add_btn{
+    display: flex;
+    margin-top:5px
+}
+.auto_add_btn div{
+    flex: 1;
+    text-align: center
+}
+#auto_add_body li+li{
+    margin-top: 5px;
+}
+/* 非自动添加 */
+.noAuto_addIpt{
+    /* width: 100%; */
+    padding-right:105px;
+    padding-left:10px;
+    text-align: center
+}

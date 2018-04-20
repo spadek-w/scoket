@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" name="viewport">
+    <title>机器人程序</title>
+    <!-- <link rel="stylesheet" type="text/css" href="./style.css" /> -->
+    <!--[if lt IE 8]><script src="./modules/json3.min.js"></script><![endif]-->
+    <!-- <script src="./socket.io.js"></script> -->
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <!-- <link rel="stylesheet" href="./socket.css"> -->
+    <!-- <link rel="stylesheet" href="./socket2.css"> -->
+    <link rel="stylesheet" href="./base.css">
+    <link rel="stylesheet" href="./index.css">
+    <script type="text/javascript" src="http://bobo.yimwing.com:9019/socket.io/socket.io.js"></script>
+    <!-- <script src="http://192.168.1.210:9019/socket.io.js"></script> -->
+    <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+
+</head>
+
+<body>
+    <div id="login_box">
+        <h1 class="header">聊天链接生成</h1>
+        <ul>
+            <li class="marginTop10">
+                <div class="user_name">
+                    <span>用户昵称:</span>
+                </div>
+                <div class="user_name_rightIpt">
+                    <div class="user_ipt">
+                        <input type="text" placeholder="用户昵称" id="user_name" name="user_name" value="ROBOT" style='width:100%'>
+                    </div>
+                </div>
+            </li>
+            <li class="marginTop10">
+                <div class="user_name">
+                    <span>用 户 ID:</span>
+                </div>
+                <div class="user_name_rightIpt">
+                    <div class="user_ipt">
+                        <input type="text" placeholder="用户ID" id="user_id" name="user_id" value="" style="width:100%;">
+                    </div>
+                </div>
+            </li>
+            <li class="marginTop10">
+                <div class="user_name">
+                    <span>主 播 ID:</span>
+                </div>
+                <div class="user_name_rightIpt">
+                    <div class="user_ipt">
+                        <input type="text" placeholder="主播ID" id="room_id" name="room_id" value="" style="width:100%">
+                    </div>
+                </div>
+            </li>
+            <li class="marginTop10">
+                <div class="joinOrLeaveRoom">
+                    <div class="join_btn">
+                        <input type="button" value="进入房间" onclick="joinRoom();" />
+                    </div>
+                    <div class="leave_btn">
+                        <input type="button" value="离开房间" onclick="leaveRoom();" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div class="socket_body">
+            <ul class="socket_body_ul">
+                
+            </ul>
+        </div>
+        <ul id="auto_add_body">
+            <li>
+                <div class="auto_add_body">
+                    <div class="auto_add_time">
+                        <span class=" marginRight5 lineHeight25">每</span>
+                        <input type="text" id='flower_time' placeholder="秒" style='width:60px' value=''>
+                        <span class=" lineHeight25">s</span>
+                    </div>
+                    <div class="auto_add_num">
+                        <span style="margin-left:5px;">添加</span>
+                        <input type="text" id='flower_time_addnum' placeholder="花" style='width:90px' value="">
+                        <span>朵花</span>
+                    </div>
+                </div>
+                <div class="auto_add_btn">
+                    <div>
+                        <input type="button" style='width:98%' class="backgroundColor1" value="确定自动添加花朵" id="addTimeFlower">
+                    </div>
+                    <div>
+                        <input type="button" style='width:98%' class="backgroundColor2" value="取消自动添加" id='clearTimeFlower'>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="auto_add_body">
+                    <div class="auto_add_time">
+                        <span class=" marginRight5 lineHeight25">每</span>
+                        <input type="text" id='robot_time' placeholder="秒" style='width:60px'>
+                        <span class=" lineHeight25">s</span>
+                    </div>
+                    <div class="auto_add_num">
+                        <span style="margin-left:5px;">添加</span>
+                        <input type="text" id='robot_time_addnum' placeholder="机器人" style='width:90px'>
+                        <span>机器人</span>
+                    </div>
+                </div>
+                <div class="auto_add_btn">
+                    <div>
+                        <input type="button" style='width:98%' class="backgroundColor1" value="确定自动添加机器人" id='addTimeRobot'>
+                    </div>
+                    <div>
+                        <input type="button" style='width:98%' class="backgroundColor2" value="取消自动添加" id='clearTimeRobot'>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="auto_add_body">
+                    <div class="auto_add_time">
+                        <span class=" marginRight5 lineHeight25">每</span>
+                        <input type="text" id='people_time' placeholder="秒" style='width:60px'>
+                        <span class=" lineHeight25">s</span>
+                    </div>
+                    <div class="auto_add_num">
+                        <span style="margin-left:5px;">添加</span>
+                        <input type="text" id='people_time_addnum' placeholder="在线人数" style='width:90px'>
+                        <span>在线人</span>
+                    </div>
+                </div>
+                <div class="auto_add_btn">
+                    <div>
+                        <input type="button" style='width:98%' class="backgroundColor1" value="确定自动添加在线人数" id='addTimePeople'>
+                    </div>
+                    <div>
+                        <input type="button" style='width:98%' class="backgroundColor2" value="取消自动添加" id='clearTimePeople'>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul style="margin-bottom:40px">
+            <li class="marginTop10">
+                <input type="button" value="赠送花朵" id="addFlower" class="floatRight backgroundColor1" style='width:90px;margin-right:5px'
+                />
+                <div class="noAuto_addIpt">
+                    <div class="noAuto_addIpt_body">
+                        <input type="text" style="width:98%;" placeholder="花朵数量" id="flower_num" name="flower_num" value="18" />
+                    </div>
+                </div>
+            </li>
+            <li class="marginTop10">
+                <input type="button" value="添加在线数" id="addCount" class="floatRight backgroundColor1" style='width:90px;margin-right:5px'
+                />
+                <div class="noAuto_addIpt">
+                    <div class="noAuto_addIpt_body">
+                        <input type="text" style="width:98%;" placeholder="添加在线人数（不加机器人）" id="people_num" name="people_num" value="5" />
+                    </div>
+                </div>
+            </li>
+            <li class="marginTop10">
+                <input type="button" value="添加机器人" id="addRobot" class="floatRight backgroundColor1" style='width:90px;margin-right:5px' />
+                <div class="noAuto_addIpt">
+                    <div class="noAuto_addIpt_body">
+                        <input type="text" style="width:98%;" placeholder="机器人数量（新增）" id="robot_num" name="robot_num" value="5" />
+                    </div>
+                </div>
+            </li>
+            <li class="marginTop10">
+                <input type="button" value="重置机器人数" id="resetRobot" class="floatRight backgroundColor1" style='width:90px;margin-right:5px' />
+                <div class="noAuto_addIpt">
+                    <div class="noAuto_addIpt_body">
+                        <input type="text" style="width:98%;" placeholder="重置数（直接减到这个数字）" id="reset_num" name="reset_num" value="" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- room
+    count -->
+    <!-- <script type="text/javascript" src="./socket.js"></script> -->
+    <script src="./index.js"></script>
+    <script>
+        $(document).ready(function () {
+            var flowerInterval = null;
+            var robotInterval = null;
+            var perpleInterval = null;
+            // var roomid = $('#user_id').val()
+            $('#addFlower').click(function () {
+                if (client) {
+                    var roomid = $('#room_id').val()
+                    if (roomid && rejoinResponse == 1) {
+                        $.ajax({
+                            type: "GET",
+                            url: 'http://192.168.1.210:9019/chat_api/add_flower',
+                            data: { room: roomid + 'push', count: parseInt($('#flower_num').val()) },
+                            dataType: "jsonp",
+                            success: function (data) {
+                                console.log(data)
+                            }
+                        })
+                    } else {
+                        console.log('输入房间')
+                    }
+                }
+            })
+            $('#addCount').click(function () {
+                if (client) {
+                    var roomid = $('#room_id').val()
+                    if (roomid && rejoinResponse == 1) {
+                        $.ajax({
+                            type: "GET",
+                            url: 'http://192.168.1.210:9019/chat_api/add_people',
+                            data: { room: roomid + 'push', count: parseInt($('#people_num').val()) },
+                            dataType: "jsonp",
+                            success: function (data) {
+                                console.log(data)
+                            }
+                        })
+                    } else {
+                        console.log('输入房间')
+                    }
+                }
+            })
+            $('#addRobot').click(function () {
+                if (client) {
+                    var roomid = $('#room_id').val()
+                    if (roomid && rejoinResponse == 1) {
+                        $.ajax({
+                            type: "GET",
+                            url: 'http://192.168.1.210:9019/chat_api/add_robot',
+                            data: { room: roomid + 'push', count: parseInt($('#robot_num').val()) },
+                            dataType: "jsonp",
+                            success: function (data) {
+                                console.log(data)
+                            }
+                        })
+                    } else {
+                        console.log('输入房间')
+                    }
+                }
+            })
+            // 重置机器人数量
+            $('#resetRobot').click(function () {
+                var reset_num = parseInt($('#reset_num').val())
+                if (client) {
+                    var roomid = $('#room_id').val()
+                    if (roomid && rejoinResponse == 1) {
+                            $.ajax({
+                                type: "GET",
+                                url: 'http://bobo.yimwing.com:9019/chat_api/reset_robot',
+                                data: { room: roomid + 'push', count: reset_num },
+                                dataType: "jsonp",
+                                success: function (data) {
+                                    console.log(data)
+                                }
+                            })
+                    } else {
+                        console.log('输入房间')
+                    }
+                }
+             })
+
+            // 自动添加
+            $('#addTimePeople').click(function () {
+                var perpleTime = parseInt($('#people_time').val())
+                var perpleAddNum = parseInt($('#people_time_addnum').val());
+                if (perpleInterval) {
+                    console.log('已清楚上次定时器')
+                    clearInterval(perpleInterval);
+                }
+                if (client) {
+                    var roomid = $('#room_id').val()
+                    if (roomid && rejoinResponse == 1) {
+                        perpleInterval = setInterval(function () {
+                            $.ajax({
+                                type: "GET",
+                                url: 'http://bobo.yimwing.com:9019/chat_api/add_people',
+                                data: { room: roomid + 'push', count: perpleAddNum },
+                                dataType: "jsonp",
+                                success: function (data) {
+                                    console.log(data)
+                                }
+                            })
+                            console.log(perpleAddNum + '+perpleAddNum')
+                        }, perpleTime * 1000)
+                    } else {
+                        console.log('输入房间')
+                    }
+                }
+            })
+            $('#addTimeRobot').click(function () {
+                var robotTime = parseInt($('#robot_time').val())
+                var robotAddNum = parseInt($('#robot_time_addnum').val());
+                if (robotInterval) {
+                    console.log('已清楚上次定时器')
+                    clearInterval(robotInterval);
+                }
+                if (client) {
+                    var roomid = $('#room_id').val()
+                    if (roomid && rejoinResponse == 1) {
+                        robotInterval = setInterval(function () {
+                            $.ajax({
+                                type: "GET",
+                                url: 'http://bobo.yimwing.com:9019/chat_api/add_robot',
+                                data: { room: roomid + 'push', count: robotAddNum },
+                                dataType: "jsonp",
+                                success: function (data) {
+                                    console.log(data)
+                                }
+                            })
+                            // console.log(robotAddNum + '+robotAddNum')
+                        }, robotTime * 1000)
+                    } else {
+                        console.log('输入房间')
+                    }
+                }
+            })
+            $('#addTimeFlower').click(function () {
+                var flowerTime = parseInt($('#flower_time').val())
+                var flowerAddNum = parseInt($('#flower_time_addnum').val());
+                if (flowerInterval) {
+                    console.log('已清楚上次定时器')
+                    clearInterval(flowerInterval);
+                }
+                if (client) {
+                    var roomid = $('#room_id').val()
+                    if (roomid && rejoinResponse == 1) {
+                        flowerInterval = setInterval(function () {
+                            $.ajax({
+                                type: "GET",
+                                url: 'http://bobo.yimwing.com:9019/chat_api/add_flower',
+                                data: { room: roomid + 'push', count: flowerAddNum },
+                                dataType: "jsonp",
+                                success: function (data) {
+                                    console.log(data)
+                                }
+                            })
+                            console.log(flowerAddNum + '+flowerAddNum')
+                        }, flowerTime * 1000)
+                    } else {
+                        console.log('输入房间')
+                    }
+                }
+            })
+
+           
+
+            // 取消自动添加
+            $('#clearTimeRobot').click(function () {
+                clearInterval(robotInterval);
+            })
+            $('#clearTimeFlower').click(function () {
+                clearInterval(flowerInterval);
+            })
+            $('#clearTimePeople').click(function () {
+                clearInterval(perpleInterval);
+            })
+        });
+    </script>
+</body>
+
+</html>
